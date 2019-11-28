@@ -5,11 +5,11 @@
     <input type="password" class="form-control" placeholder="PW" v-model="userPw">
     <button class="btn btn-success" v-on:click="loginUser">Login</button>
     <button class="btn btn-success" v-on:click="addUser">Sign-up</button>
-    <ui id="postList">
+    <ul id="postList">
       <li v-for="post in posts" :key="post">
         {{ post }}
       </li>
-    </ui>
+    </ul>
   </div>
 </template>
 
@@ -22,12 +22,11 @@ export default {
     return {
       userId: '',
       userPw: '',
-      posts: ['none1', 'none2', 'none3'],
+      posts: [''],
     }
   },
   mounted () {
     console.log('test component mounted.')
-    this.posts = ['mount1','mount2','mount3', ]
     this.$http.get('/list').then( (result) => {
       console.log(result.data.list)
       this.posts = result.data.list
