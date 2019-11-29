@@ -5,22 +5,14 @@
     <input type="password" class="form-control" placeholder="PW" v-model="userPw">
     <button class="btn btn-success" v-on:click="loginUser">Login</button>
     <button class="btn btn-success" v-on:click="addUser">Sign-up</button>
-    <ul id="postList">
-      <li class="post-btn" v-for="post in posts" :key="post.id">
-        <router-link :to="{ name: 'list', params: { page: post.id }}">
-          {{ post.id }} {{ post.title }}
-        </router-link>
-      </li>
-    </ul>
+    <Post :page="page" :key="page" />
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-/* import HelloWorld from '@/components/HelloWorld.vue'
- *  */
-
-import Main from '../components/Main.vue'
+import Main from '@/components/Main.vue'
+import Post from '@/views/Post.vue'
 
 
 export default {
@@ -29,37 +21,24 @@ export default {
     return {
       userId: '',
       userPw: '',
-      posts: [''],
       page: 1,
     }
   },
   watch: {
-    '$route' (to, from) {
-      console.log('route change to ' + to + ' from ' + from)
+    /* '$route' (to, from) { */
+    '$route' () {
       console.log('route page :'+  this.$route.params.page)
-      this.page = this.$route.params.page
-      this.$http.get('/list', { params: {
-        page: 1,}
-      }).then( (result) => {
-        console.log(result.data.list)
-        this.posts = result.data.list
-      });
+      this.page = parseInt(this.$route.params.page);
     }
   },
   mounted () {
     this.page = this.$route.params.page
-    this.$http.get('/list').then( (result) => {
-      console.log(result.data.list)
-      this.posts = result.data.list
-    });
   },
   components: {
-    Main
+    Main,
+    Post
   },
   methods: {
-    selectPost: function(id) {
-      console.log('You chose a post id ' + id)
-    },
     addUser: function() {
       let tp = this.$hostname + '/add-user'
       console.log('test to ' + tp)
