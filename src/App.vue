@@ -1,13 +1,13 @@
 <template>
   <div id="app">
-    <Main msg="Welcome to Your Vue.js App"/>
+    <Main msg="Web-test 3"/>
     <input type="search" class="form-control" placeholder="ID" v-model="userId">
     <input type="password" class="form-control" placeholder="PW" v-model="userPw">
     <button class="btn btn-success" v-on:click="loginUser">Login</button>
     <button class="btn btn-success" v-on:click="addUser">Sign-up</button>
     <ul id="postList">
-      <li v-for="post in posts" :key="post">
-        {{ post }}
+      <li v-for="post in posts" :key="post.id">
+        <ul class="post-btn" @click="selectPost(post.id)">{{ post.id }} {{ post.title }}</ul>
       </li>
     </ul>
   </div>
@@ -31,12 +31,14 @@ export default {
       console.log(result.data.list)
       this.posts = result.data.list
     });
-
   },
   components: {
     Main
   },
   methods: {
+    selectPost: function(id) {
+      console.log('You chose a post id ' + id)
+    },
     addUser: function() {
       let tp = this.$hostname + '/add-user'
       console.log('test to ' + tp)
@@ -68,5 +70,8 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+}
+.post-btn:hover {
+  background-color:lightgray;
 }
 </style>
