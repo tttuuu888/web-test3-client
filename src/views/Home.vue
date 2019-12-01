@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <Main msg="Web-test 3"/>
+    <h1>Web test3</h1>
     <input type="search" class="form-control" placeholder="ID" v-model="userId">
     <input type="password" class="form-control" placeholder="PW" v-model="userPw">
     <button class="btn btn-success" v-on:click="loginUser">Login</button>
@@ -11,7 +11,6 @@
 
 <script>
 // @ is an alias to /src
-import Main from '@/components/Main.vue'
 import Post from '@/views/Post.vue'
 
 
@@ -37,7 +36,6 @@ export default {
     this.getList();
   },
   components: {
-    Main,
     Post
   },
   methods: {
