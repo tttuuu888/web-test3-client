@@ -5,7 +5,7 @@
     <input type="password" class="form-control" placeholder="PW" v-model="userPw">
     <button class="btn btn-success" v-on:click="loginUser">Login</button>
     <button class="btn btn-success" v-on:click="addUser">Sign-up</button>
-    <Post :page="page" :key="page" />
+    <Post :posts="posts" :key="currentPage"/>
   </div>
 </template>
 
@@ -21,24 +21,40 @@ export default {
     return {
       userId: '',
       userPw: '',
-      page: 1,
+      totalPage: 1,
+      currentPage: 1,
+      posts: [],
     }
   },
   watch: {
     /* '$route' (to, from) { */
     '$route' () {
       console.log('route page :'+  this.$route.params.page)
-      this.page = parseInt(this.$route.params.page);
+      this.getList();
     }
   },
   mounted () {
-    this.page = this.$route.params.page
+    this.getList();
   },
   components: {
     Main,
     Post
   },
   methods: {
+    getList: function() {
+      if(this.$route.params.page) {
+        this.currentPage = parseInt(this.$route.params.page);
+      }
+
+      this.$http.get('/list', { params: {page: this.currentPage,}})
+          .then( (result) => {
+            console.log("axios get list")
+            console.log(result.data.list)
+            this.posts = result.data.list
+            this.totalPage =  result.data.totalPage;
+            this.currentPage =  result.data.currentPage;
+          });
+    },
     addUser: function() {
       let tp = this.$hostname + '/add-user'
       console.log('test to ' + tp)

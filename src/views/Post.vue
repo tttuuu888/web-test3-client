@@ -18,26 +18,22 @@ export default {
   methods: {
   },
   props: {
-    page: Number,
+    posts: Array,
   },
   data () {
     return {
       msg: 'test',
-      posts: [],
-      curPage: this.page
     }
   },
   created () {
-    console.log("created page : " + this.curPage)
   },
   mounted () {
-    console.log("page : " + this.curPage)
-    this.$http.get('/list', { params: {
-      page: this.curPage,}
-    }).then( (result) => {
-      console.log(result.data.list)
-      this.posts = result.data.list
-    });
+    /* this.$http.get('/list', { params: {
+     *   page: this.curPage,}
+     * }).then( (result) => {
+     *   console.log(result.data.list)
+     *   this.posts = result.data.list
+     * }); */
   },
 }
 </script>
