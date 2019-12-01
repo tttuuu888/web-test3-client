@@ -1,14 +1,11 @@
 <template>
   <div id="app">
     <h1>Web test3</h1>
-    <LoginForm v-on:loginUpdate="userLogin" v-if="loggedIn === false" :key="loggedIn" />
+    <LoginForm v-on:loginUpdate="userLogin" v-if="!loggedIn" :key="loggedIn" />
     <div v-else>
-      <div>You are logged in</div>
-      <button @click="userLogout">Logout</button>
+      <div class="Sameline">Hello, {{ loginNickname }}</div>
+      <button class="Sameline" @click="userLogout">Logout</button>
     </div>
-    <!-- <input type="search" class="form-control" placeholder="ID" v-model="userId">
-         <input type="password" class="form-control" placeholder="PW" v-model="userPw">
-         <button class="btn btn-success" v-on:click="loginUser">Login</button> -->
     <Post :posts="posts" :key="currentPage"/>
   </div>
 </template>
@@ -39,6 +36,13 @@ export default {
     }
   },
   mounted () {
+    console.log(" local store: logged in? " + localStorage.getItem('loggedin') )
+    console.log(" local store: id ? " + localStorage.getItem('loginid') )
+    if(localStorage.getItem('loggedin')  == "true") {
+      this.loginId = localStorage.getItem('loginid') ;
+      this.loginNickname = localStorage.getItem('loginnickname');
+      this.loggedIn = true;
+    }
     this.getList();
   },
   components: {
@@ -61,11 +65,15 @@ export default {
           });
     },
     userLogin: function(id, nickname) {
+      localStorage.setItem('loggedin',true)
+      localStorage.setItem('loginid',id)
+      localStorage.setItem('loginnickname',nickname)
+
       this.loggedIn = true;
       this.loginId = id;
       this.loginNickname = nickname;
       console.log("home func loging id, nickname : " + this.loginId, this.loginNickname)
-      this.$forceUpdate();
+      /* this.$forceUpdate(); */
     },
     userLogout: function() {
       this.$http.post('/user/logout', {
@@ -95,5 +103,10 @@ export default {
 }
 .post-btn:hover {
   background-color:lightgray;
+}
+.Sameline {
+  display: inline-block;
+  padding:1px;
+  margin:12px;
 }
 </style>
