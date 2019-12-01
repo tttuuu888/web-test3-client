@@ -3,7 +3,7 @@
     <ul id="postList">
       <li class="post-btn" v-for="post in this.posts" :key="post.id">
         <router-link :to="{ name: 'list', params: { page: post.id }}">
-          {{ post.id }} {{ post.title }}
+          {{ post.id }} {{ post.title }} {{ post.nickname }}
         </router-link>
       </li>
     </ul>
