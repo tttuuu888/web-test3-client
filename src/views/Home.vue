@@ -1,10 +1,14 @@
 <template>
   <div id="app">
     <h1>Web test3</h1>
-    <input type="search" class="form-control" placeholder="ID" v-model="userId">
-    <input type="password" class="form-control" placeholder="PW" v-model="userPw">
-    <button class="btn btn-success" v-on:click="loginUser">Login</button>
-    <button class="btn btn-success" v-on:click="addUser">Sign-up</button>
+    <LoginForm v-on:loginUpdate="userLogin" v-if="loggedIn === false" :key="loggedIn" />
+    <div v-else>
+      <div>You are logged in</div>
+      <button @click="userLogout">Logout</button>
+    </div>
+    <!-- <input type="search" class="form-control" placeholder="ID" v-model="userId">
+         <input type="password" class="form-control" placeholder="PW" v-model="userPw">
+         <button class="btn btn-success" v-on:click="loginUser">Login</button> -->
     <Post :posts="posts" :key="currentPage"/>
   </div>
 </template>
@@ -12,14 +16,16 @@
 <script>
 // @ is an alias to /src
 import Post from '@/views/Post.vue'
+import LoginForm from '@/views/LoginForm.vue'
 
 
 export default {
   name: 'app',
   data () {
     return {
-      userId: '',
-      userPw: '',
+      loggedIn: false,
+      loginId: '',
+      loginNickname: '',
       totalPage: 1,
       currentPage: 1,
       posts: [],
@@ -36,7 +42,8 @@ export default {
     this.getList();
   },
   components: {
-    Post
+    Post,
+    LoginForm,
   },
   methods: {
     getList: function() {
@@ -47,31 +54,32 @@ export default {
       this.$http.get('/list', { params: {page: this.currentPage,}})
           .then( (result) => {
             console.log("axios get list")
-            console.log(result.data.list)
+            console.log(result)
             this.posts = result.data.list
             this.totalPage =  result.data.totalPage;
             this.currentPage =  result.data.currentPage;
           });
     },
-    addUser: function() {
-      let tp = this.$hostname + '/add-user'
-      console.log('test to ' + tp)
-      this.$http.post('/add-user',
-                      {
-                        auth: {
-                          id: 'janedoe',
-                          pw: 's00pers3cret'
-                        },
-                      },
-      ).then( (result) => {
-        console.log(result.data)
-        console.log("test api1 : " + result.data)
-      })
-      console.log("add user,",this.userId,this.userPw, this.$hostname)
+    userLogin: function(id, nickname) {
+      this.loggedIn = true;
+      this.loginId = id;
+      this.loginNickname = nickname;
+      console.log("home func loging id, nickname : " + this.loginId, this.loginNickname)
+      this.$forceUpdate();
     },
-    loginUser: function() {
-      console.log("login user,",this.userId,this.userPw)
-    }
+    userLogout: function() {
+      this.$http.post('/user/logout', {
+        auth: {
+          id: this.loginId,
+        },
+      })
+          .then( (result) => {
+            console.log("axios get list : " + result.data.user)
+            this.loggedIn = false;
+            this.loginId = '';
+            this.loginNickname = '';
+          });
+    },
   },
 }
 </script>
