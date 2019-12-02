@@ -36,11 +36,11 @@ export default {
     }
   },
   mounted () {
-    console.log(" local store: logged in? " + localStorage.getItem('loggedin') )
-    console.log(" local store: id ? " + localStorage.getItem('loginid') )
-    if(localStorage.getItem('loggedin')  == "true") {
-      this.loginId = localStorage.getItem('loginid') ;
-      this.loginNickname = localStorage.getItem('loginnickname');
+    console.log(" session store: logged in? " + sessionStorage.getItem('loggedin') )
+    console.log(" session store: id ? " + sessionStorage.getItem('loginid') )
+    if(sessionStorage.getItem('loggedin')  == "true") {
+      this.loginId = sessionStorage.getItem('loginid') ;
+      this.loginNickname = sessionStorage.getItem('loginnickname');
       this.loggedIn = true;
     }
     this.getList();
@@ -65,9 +65,9 @@ export default {
           });
     },
     userLogin: function(id, nickname) {
-      localStorage.setItem('loggedin',true)
-      localStorage.setItem('loginid',id)
-      localStorage.setItem('loginnickname',nickname)
+      sessionStorage.setItem('loggedin',true)
+      sessionStorage.setItem('loginid',id)
+      sessionStorage.setItem('loginnickname',nickname)
 
       this.loggedIn = true;
       this.loginId = id;
@@ -86,6 +86,9 @@ export default {
             this.loggedIn = false;
             this.loginId = '';
             this.loginNickname = '';
+            sessionStorage.setItem('loggedin',false);
+            sessionStorage.removeItem('loginid');
+            sessionStorage.removeItem('loginnickname');
           });
     },
   },
