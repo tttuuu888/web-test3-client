@@ -29,10 +29,16 @@ export default {
                         },
                       },
       ).then( (result) => {
-        let loginId = result.data.user.id;
-        let loginNickname = result.data.user.nickname;
-        console.log("loging id, nickname : " + loginId, loginNickname)
-        this.$emit('loginUpdate', loginId, loginNickname)
+        console.log("login result : " + JSON.stringify(result.data));
+        if(result.data.error) {
+          console.log("Login failed.");
+          alert("Login failed!");
+        } else {
+          let loginId = result.data.user.id;
+          let loginNickname = result.data.user.nickname;
+          console.log("loging id, nickname : " + loginId, loginNickname)
+          this.$emit('loginUpdate', loginId, loginNickname)
+        }
       })
     },
     signupClick: function() {
