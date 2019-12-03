@@ -6,7 +6,6 @@
 
           <div class="modal-header">
             <slot name="header">
-              default header
             </slot>
           </div>
 
@@ -37,8 +36,8 @@
 
           <div class="modal-footer">
             <slot name="footer">
-              <div class="same-user-alert" v-if="sameUserAlert">
-                Same user already exists!
+              <div class="user-alert" v-if="userAlert">
+                {{ alertMsg }}
               </div>
               <button class="modal-default-button" @click="registerUser">
                 Submit
@@ -68,11 +67,20 @@ export default {
       this.$emit('closeModal');
     },
     registerUser: function() {
+      if(this.userId == '' ||
+         this.userPassword == '' ||
+         this.userEmail == '' ||
+         this.userEmail == '') {
+        this.alertMsg = 'Fill in all fields!';
+        this.userAlert = true
+        return;
+      }
+
       this.$http.get('/user/exists-p', {params: {
         id: this.userId,
         email: this.userEmail,
       }}).then( (result) => {
-        console.log("result : " + result.data.status)
+        console.log("result : " + JSON.stringify(result.data))
         if(result.data.status == "success") {
           this.$emit('submitSignup', {
             auth: {
@@ -84,7 +92,8 @@ export default {
             }
           });
         } else {
-          this.sameUserAlert = true
+          this.alertMsg = 'Same user already exists!';
+          this.userAlert = true
         }
       })
     }
@@ -97,7 +106,8 @@ export default {
       userName: '',
       userNickname: '',
       userEmail: '',
-      sameUserAlert: false,
+      userAlert: false,
+      alertMsg: ''
     }
   },
   created () {
@@ -173,7 +183,7 @@ export default {
   transform: scale(1.1);
 }
 
-.same-user-alert {
+.user-alert {
   color: #ff0000;
 }
 
