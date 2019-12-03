@@ -37,7 +37,9 @@
 
           <div class="modal-footer">
             <slot name="footer">
-
+              <div class="same-user-alert" v-if="sameUserAlert">
+                Same user already exists!
+              </div>
               <button class="modal-default-button" @click="registerUser">
                 Submit
               </button>
@@ -81,6 +83,8 @@ export default {
               email: this.userEmail,
             }
           });
+        } else {
+          this.sameUserAlert = true
         }
       })
     }
@@ -93,6 +97,7 @@ export default {
       userName: '',
       userNickname: '',
       userEmail: '',
+      sameUserAlert: false,
     }
   },
   created () {
@@ -166,4 +171,10 @@ export default {
 .modal-leave-active .modal-container {
   -webkit-transform: scale(1.1);
   transform: scale(1.1);
-}</style>
+}
+
+.same-user-alert {
+  color: #ff0000;
+}
+
+</style>
