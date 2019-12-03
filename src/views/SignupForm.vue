@@ -11,9 +11,28 @@
           </div>
 
           <div class="modal-body">
-            <slot name="body">
-              default body
-            </slot>
+            <form action="">
+              <p>
+                <label for="id-input">ID : </label>
+                <input id="id-input" type="text" value="" v-model="userId" />
+              </p>
+              <p>
+                <label for="name-input">Name : </label>
+                <input id="name-input" type="text" value="" v-model="userName" />
+              </p>
+              <p>
+                <label for="pw-input">Password : </label>
+                <input id="pw-input" type="password" value="" v-model="userPassword" />
+              </p>
+              <p>
+                <label for="email-input">E-mail : </label>
+                <input id="email-input" type="text" value="" v-model="userEmail" />
+              </p>
+              <p>
+                <label for="nickname-input">Nickname : </label>
+                <input id="nickname-input" type="text" value="" v-model="userNickname" />
+              </p>
+            </form>
           </div>
 
           <div class="modal-footer">
@@ -47,13 +66,33 @@ export default {
       this.$emit('closeModal');
     },
     registerUser: function() {
-      let user = {};
-      this.$emit('submitSignup', user);
+      this.$http.get('/user/exists-p', {params: {
+        id: this.userId,
+        email: this.userEmail,
+      }}).then( (result) => {
+        console.log("result : " + result.data.status)
+        if(result.data.status == "success") {
+          this.$emit('submitSignup', {
+            auth: {
+              id: this.userId,
+              password: this.userPassword,
+              name: this.userName,
+              nickname: this.userNickname,
+              email: this.userEmail,
+            }
+          });
+        }
+      })
     }
   },
   data () {
     return {
       msg: 'test',
+      userId: '',
+      userPassword: '',
+      userName: '',
+      userNickname: '',
+      userEmail: '',
     }
   },
   created () {

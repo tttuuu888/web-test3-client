@@ -45,8 +45,20 @@ export default {
       this.signupVisible = false;
     },
     submitSignup: function(user) {
-      console.log("user : " + user)
+      console.log("user : " + JSON.stringify(user))
       this.signupVisible = false;
+
+      this.$http.post('/user/add', user,)
+          .then( (result) => {
+            if(result.data.error) {
+              console.log("user add error : " + result.data.error)
+            } else {
+              let loginId = result.data.user.id;
+              let loginNickname = result.data.user.nickname;
+              console.log("loging id, nickname : " + loginId, loginNickname)
+              this.$emit('loginUpdate', loginId, loginNickname)
+            }
+          })
     }
   },
   data () {
