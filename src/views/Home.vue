@@ -1,10 +1,15 @@
 <template>
   <div id="app">
     <h1>Web test3</h1>
-    <LoginForm v-on:loginUpdate="userLogin" v-if="!loggedIn" :key="loggedIn" />
-    <div v-else>
-      <div class="Sameline">Hello, {{ loginNickname }}</div>
-      <button class="Sameline" @click="userLogout">Logout</button>
+    <div>
+      <UserMenu v-if="loggedIn" :key="loggedIn"
+                v-on:userLogout="userLogout"
+                v-on:writePost="writePost"
+                v-on:getList="getList"
+                :userid="loginId"
+                :nickname="loginNickname"/>
+      <LoginForm v-else
+                 v-on:loginUpdate="userLogin"/>
     </div>
     <Post :posts="posts" :key="currentPage"/>
   </div>
@@ -14,6 +19,7 @@
 // @ is an alias to /src
 import Post from '@/views/Post.vue'
 import LoginForm from '@/views/LoginForm.vue'
+import UserMenu from '@/views/UserMenu.vue'
 
 
 export default {
@@ -49,6 +55,7 @@ export default {
   components: {
     Post,
     LoginForm,
+    UserMenu,
   },
   methods: {
     getList: function() {
@@ -89,6 +96,9 @@ export default {
             sessionStorage.removeItem('user');
           });
     },
+    writePost: function() {
+
+    }
   },
 }
 </script>
@@ -104,10 +114,5 @@ export default {
 }
 .post-btn:hover {
   background-color:lightgray;
-}
-.Sameline {
-  display: inline-block;
-  padding:1px;
-  margin:12px;
 }
 </style>
