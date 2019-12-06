@@ -15,7 +15,7 @@
       <Post v-if="showPost" :key="showPost"
             :postid="postId" />
      <PostsList v-else
-                :posts="posts" :key="currentPage"/>
+                :posts="posts" :key="showPostList"/>
     </div>
   </div>
 </template>
@@ -38,8 +38,9 @@ export default {
       totalPage: 1,
       currentPage: 1,
       posts: [],
-      postId: 0,
+      postId: '0',
       showPost: false,
+      showPostList: true,
     }
   },
   watch: {
@@ -48,14 +49,19 @@ export default {
       if(to.name == 'post') {
         /* console.log("to:" +JSON.stringify(to)); */
         /* console.log('route page :'+  JSON.stringify(this.$route.params)) */
-        this.postId = this.$route.params.postid;
+        this.currentPage = -1;
+        this.postId = String(this.$route.params.postid);
         console.log("postid:" + this.postId);
         this.showPost = true;
+        this.showPostList = false;
 
       } else {
-        /* console.log("to:" +JSON.stringify(to) + "from :" + JSON.stringify(from))
-           console.log(" param : " + JSON.stringify(this.$route.params))
-           console.log('route page :'+  this.$route.params.post) */
+        /* console.log("to:" +JSON.stringify(to)); */
+        /* console.log("to:" +JSON.stringify(to) + "from :" + JSON.stringify(from)) */
+        /* console.log(" param : " + JSON.stringify(this.$route.params)) */
+        /* console.log('route page :'+  this.$route.params.post) */
+        this.showPost = false;
+        this.showPostList = true;
            this.getList();
       }
     }
@@ -85,7 +91,7 @@ export default {
 
       this.$http.get('/list', { params: {page: this.currentPage,}})
           .then( (result) => {
-            console.log("axios get list")
+            /* console.log("axios get list" + JSON.stringify(result.data)) */
             this.posts = result.data.list
             this.totalPage =  result.data.totalPage;
             this.currentPage =  result.data.currentPage;
