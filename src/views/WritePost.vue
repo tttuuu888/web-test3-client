@@ -15,7 +15,7 @@
                 <input id="title-input" type="text" placeholder="Title" v-model="postTitle" />
               </p>
               <p>
-                <input id="content-input" type="text" placeholder="Content" v-model="postContent" />
+                <textarea id="content-input" type="text" placeholder="Content" v-model="postContent" />
               </p>
             </form>
           </div>

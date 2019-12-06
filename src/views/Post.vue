@@ -2,7 +2,7 @@
   <div>
     <div>title : {{ this.title }}</div>
     <div>Author : {{ this.authorNickname }}</div>
-    <div>Content : {{ this.content }}</div>
+    <div>Content : <pre>{{ this.content }}</pre></div>
   </div>
 </template>
 
