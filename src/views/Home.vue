@@ -11,13 +11,18 @@
       <LoginForm v-else
                  v-on:loginUpdate="userLogin"/>
     </div>
-    <Post :posts="posts" :key="currentPage"/>
+    <div>
+      <Post v-if="showPost" :key="showPost"
+            :postid="postId" />
+     <PostsList v-else
+                :posts="posts" :key="currentPage"/>
+    </div>
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-import Post from '@/views/Post.vue'
+import PostsList from '@/views/PostsList.vue'
 import LoginForm from '@/views/LoginForm.vue'
 import UserMenu from '@/views/UserMenu.vue'
 
@@ -32,6 +37,8 @@ export default {
       totalPage: 1,
       currentPage: 1,
       posts: [],
+      postId: 0,
+      showPost: false,
     }
   },
   watch: {
@@ -53,7 +60,7 @@ export default {
     this.getList();
   },
   components: {
-    Post,
+    PostsList,
     LoginForm,
     UserMenu,
   },

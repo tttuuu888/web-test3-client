@@ -1,12 +1,6 @@
 <template>
-  <div id="post">
-    <ul id="postList">
-      <li class="post-btn" v-for="post in this.posts" :key="post.id">
-        <router-link :to="{ name: 'list', params: { page: post.id }}">
-          {{ post.id }} {{ post.title }} {{ post.nickname }}
-        </router-link>
-      </li>
-    </ul>
+  <div>
+
   </div>
 </template>
 
@@ -15,25 +9,20 @@ export default {
   name: 'post',
   components: {
   },
-  methods: {
-  },
   props: {
-    posts: Array,
+  },
+  computed: {
+  },
+  methods: {
   },
   data () {
     return {
-      msg: 'test',
+      msg: 'test'
     }
   },
   created () {
   },
   mounted () {
-    /* this.$http.get('/list', { params: {
-     *   page: this.curPage,}
-     * }).then( (result) => {
-     *   console.log(result.data.list)
-     *   this.posts = result.data.list
-     * }); */
   },
 }
 </script>
