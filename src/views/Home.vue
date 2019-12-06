@@ -38,7 +38,7 @@ export default {
       totalPage: 1,
       currentPage: 1,
       posts: [],
-      postId: '0',
+      postId: 0,
       showPost: false,
       showPostList: true,
     }
@@ -50,7 +50,7 @@ export default {
         /* console.log("to:" +JSON.stringify(to)); */
         /* console.log('route page :'+  JSON.stringify(this.$route.params)) */
         this.currentPage = -1;
-        this.postId = String(this.$route.params.postid);
+        this.postId = Number(this.$route.params.postid);
         console.log("postid:" + this.postId);
         this.showPost = true;
         this.showPostList = false;

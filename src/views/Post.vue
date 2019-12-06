@@ -12,7 +12,7 @@ export default {
   components: {
   },
   props: {
-    postid: String,
+    postid: Number,
   },
   computed: {
   },
