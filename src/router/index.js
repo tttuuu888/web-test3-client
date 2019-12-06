@@ -23,6 +23,12 @@ const routes = [
     name: 'list',
     props: true,
     component: Home
+  },
+  {
+    path: '/post/:postid',
+    name: 'post',
+    props: true,
+    component: Home
   }
 ]
 

@@ -2,7 +2,7 @@
   <div id="posts">
     <ul id="postList">
       <li class="post-btn" v-for="post in this.posts" :key="post.id">
-        <router-link :to="{ name: 'list', params: { page: post.id }}">
+        <router-link :to="{ name: 'post', params: { postid: post.id }}">
           {{ post.id }} {{ post.title }} {{ post.nickname }}
         </router-link>
       </li>

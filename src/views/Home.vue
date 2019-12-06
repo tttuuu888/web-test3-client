@@ -22,6 +22,7 @@
 
 <script>
 // @ is an alias to /src
+import Post from '@/views/Post.vue'
 import PostsList from '@/views/PostsList.vue'
 import LoginForm from '@/views/LoginForm.vue'
 import UserMenu from '@/views/UserMenu.vue'
@@ -43,9 +44,20 @@ export default {
   },
   watch: {
     /* '$route' (to, from) { */
-    '$route' () {
-      console.log('route page :'+  this.$route.params.page)
-      this.getList();
+    '$route' (to) {
+      if(to.name == 'post') {
+        /* console.log("to:" +JSON.stringify(to)); */
+        /* console.log('route page :'+  JSON.stringify(this.$route.params)) */
+        this.postId = this.$route.params.postid;
+        console.log("postid:" + this.postId);
+        this.showPost = true;
+
+      } else {
+        /* console.log("to:" +JSON.stringify(to) + "from :" + JSON.stringify(from))
+           console.log(" param : " + JSON.stringify(this.$route.params))
+           console.log('route page :'+  this.$route.params.post) */
+           this.getList();
+      }
     }
   },
   mounted () {
@@ -60,6 +72,7 @@ export default {
     this.getList();
   },
   components: {
+    Post,
     PostsList,
     LoginForm,
     UserMenu,
@@ -73,7 +86,6 @@ export default {
       this.$http.get('/list', { params: {page: this.currentPage,}})
           .then( (result) => {
             console.log("axios get list")
-            console.log(result)
             this.posts = result.data.list
             this.totalPage =  result.data.totalPage;
             this.currentPage =  result.data.currentPage;

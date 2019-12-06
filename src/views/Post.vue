@@ -1,6 +1,8 @@
 <template>
   <div>
-
+    <div>title : {{ this.title }}</div>
+    <div>Author : {{ this.authorNickname }}</div>
+    <div>Content : {{ this.content }}</div>
   </div>
 </template>
 
@@ -10,6 +12,7 @@ export default {
   components: {
   },
   props: {
+    postid: Number,
   },
   computed: {
   },
@@ -17,12 +20,23 @@ export default {
   },
   data () {
     return {
-      msg: 'test'
+      msg: 'test',
+      title: '',
+      content: '',
+      authorNickname: '',
     }
   },
   created () {
   },
   mounted () {
+    this.$http.get('/post', {params: {postid: this.postid}})
+        .then( (result) => {
+          console.log("result : " + JSON.stringify(result.data))
+          let ret = result.data;
+          this.title = ret.title
+          this.content = ret.content;
+          this.authorNickname = ret.nickname;
+    });
   },
 }
 </script>
