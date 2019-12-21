@@ -1,9 +1,15 @@
 <template>
   <div>
     {{ curPageNumber }} / {{ totalPageCount }}
-    <button :disabled="!firstPageButtonEnable">First page</button>
-    <button :disabled="!previousButtonEnable">Previous page</button>
-    <button :disabled="!nextButtonEnable">Next page</button>
+    <button :disabled="!firstPageButtonEnable" @click="firstPageButtonClick">
+      First page
+    </button>
+    <button :disabled="!previousButtonEnable" @click="previousPageButtonClick">
+      Previous page
+    </button>
+    <button :disabled="!nextButtonEnable" @click="nextPageButtonClick">
+      Next page
+    </button>
   </div>
 </template>
 
@@ -20,10 +26,21 @@ export default {
   },
   methods: {
     setButtonsEnable: function() {
+      this.curPageNumber = this.currentpage;
+      this.totalPageCount = this.totalpage;
       this.firstPageButtonEnable = this.curPageNumber != 1;
       this.previousButtonEnable  = this.curPageNumber != 1;
       this.nextButtonEnable  = this.curPageNumber != this.totalPageCount;
-    }
+    },
+    firstPageButtonClick: function() {
+      this.$router.push({ name: 'list', params: { page: 1 }})
+    },
+    previousPageButtonClick: function() {
+      this.$router.push({ name: 'list', params: { page: (this.curPageNumber - 1) }})
+    },
+    nextPageButtonClick: function() {
+      this.$router.push({ name: 'list', params: { page: (this.curPageNumber + 1) }})
+    },
   },
   watch: {
     currentpage: {
@@ -56,8 +73,6 @@ export default {
   mounted () {
     /* console.log(this.curPageNumber, this.totalPageCount) */
     this.setButtonsEnable();
-    this.curPageNumber = this.currentpage;
-    this.totalPageCount = this.totalpage;
 
   },
 }
