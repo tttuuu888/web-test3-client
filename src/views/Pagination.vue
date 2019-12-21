@@ -18,6 +18,27 @@ export default {
   computed: {
   },
   methods: {
+    setButtonsEnable: function() {
+      this.firstPageButtonEnable = this.curPageNumber != 1;
+      this.previousButtonEnable  = this.curPageNumber != 1;
+      this.nextButtonEnable  = this.curPageNumber != this.totalPageCount;
+    }
+  },
+  watch: {
+    currentpage: {
+      immediate: true,
+      handler() {
+        this.curPageNumber = this.currentpage;
+        this.setButtonsEnable();
+      }
+    },
+    totalpage: {
+      immediate: true,
+      handler() {
+        this.totalPageCount = this.totalpage;
+        this.setButtonsEnable();
+      }
+    }
   },
   data () {
     return {
@@ -34,9 +55,9 @@ export default {
   mounted () {
     console.log("mounted")
     console.log(this.curPageNumber, this.totalPageCount)
-    this.firstPageButtonEnable = this.curPageNumber != 1;
-    this.previousButtonEnable  = this.curPageNumber != 1;
-    this.nextButtonEnable  = this.curPageNumber != this.totalPageCount;
+    this.setButtonsEnable();
+    this.curPageNumber = this.currentpage;
+    this.totalPageCount = this.totalpage;
 
   },
 }

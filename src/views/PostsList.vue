@@ -26,7 +26,7 @@
       </tbody>
     </table>
     <div>
-      <Pagination :currentpage="currentpage" :totalpage="totalpage"/>
+      <Pagination :currentpage="curPageNumber" :totalpage="totalPageCount"/>
     </div>
   </div>
 </template>
@@ -46,20 +46,30 @@ export default {
     currentpage: Number,
     totalpage: Number,
   },
+  watch: {
+    currentpage: {
+      immediate: true,
+      handler() {
+        this.curPageNumber = this.currentpage;
+      }
+    },
+    totalpage: {
+      immediate: true,
+      handler() {
+        this.totalPageCount = this.totalpage;
+      }
+    }
+  },
   data () {
     return {
       msg: 'test',
+      curPageNumber: this.currentpage,
+      totalPageCount: this.totalpage,
     }
   },
   created () {
   },
   mounted () {
-    /* this.$http.get('/list', { params: {
-     *   page: this.curPage,}
-     * }).then( (result) => {
-     *   console.log(result.data.list)
-     *   this.posts = result.data.list
-     * }); */
   },
 }
 </script>
