@@ -12,10 +12,10 @@
           <div class="modal-body">
             <form action="">
               <p>
-                <input id="title-input" type="text" placeholder="Title" v-model="postTitle" />
+                <input id="title-input" type="text" placeholder="Title" v-model="postTitle" size="36" />
               </p>
               <p>
-                <textarea id="content-input" type="text" placeholder="Content" v-model="postContent" />
+                <textarea id="content-input" type="text" placeholder="Content" v-model="postContent" rows="30" cols="40" />
               </p>
             </form>
           </div>
