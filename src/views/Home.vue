@@ -95,8 +95,8 @@ export default {
           .then( (result) => {
             /* console.log("axios get list" + JSON.stringify(result.data)) */
             this.posts = result.data.list
-            this.totalPage =  result.data.totalPage;
-            this.currentPage =  result.data.currentPage;
+            this.totalPage =  parseInt(result.data.totalPage);
+            this.currentPage =  parseInt(result.data.currentPage);
           });
     },
     userLogin: function(id, nickname) {
