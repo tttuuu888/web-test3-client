@@ -1,8 +1,18 @@
 <template>
   <div>
-    <div>title : {{ this.title }}</div>
-    <div>Author : {{ this.authorNickname }}</div>
-    <div>Content : <pre>{{ this.content }}</pre></div>
+    <div>
+      <table class="title-table">
+        <td>
+          <h4>{{ this.title }}</h4>
+        </td>
+        <td>
+        </td>
+        <td>
+          <div>( {{ this.authorNickname }} )</div>
+        </td>
+      </table>
+    </div>
+    <pre>{{ this.content }}</pre>
   </div>
 </template>
 
@@ -43,5 +53,8 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-
+.title-table {
+  text-align: center;
+  margin: auto;
+}
 </style>
