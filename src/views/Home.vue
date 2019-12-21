@@ -17,6 +17,9 @@
      <PostsList v-else
                 :posts="posts" :key="showPostList"/>
     </div>
+    <div>
+      <Pagination/>
+    </div>
   </div>
 </template>
 
@@ -26,6 +29,7 @@ import Post from '@/views/Post.vue'
 import PostsList from '@/views/PostsList.vue'
 import LoginForm from '@/views/LoginForm.vue'
 import UserMenu from '@/views/UserMenu.vue'
+import Pagination from '@/views/Pagination.vue'
 
 
 export default {
@@ -82,6 +86,7 @@ export default {
     PostsList,
     LoginForm,
     UserMenu,
+    Pagination,
   },
   methods: {
     getList: function() {
