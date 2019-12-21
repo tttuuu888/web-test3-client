@@ -1,5 +1,6 @@
 <template>
   <div>
+    {{ curPageNumber }} / {{ totalPageCount }}
     <button :disabled="!firstPageButtonEnable">First page</button>
     <button :disabled="!previousButtonEnable">Previous page</button>
     <button :disabled="!nextButtonEnable">Next page</button>
@@ -53,8 +54,7 @@ export default {
   created () {
   },
   mounted () {
-    console.log("mounted")
-    console.log(this.curPageNumber, this.totalPageCount)
+    /* console.log(this.curPageNumber, this.totalPageCount) */
     this.setButtonsEnable();
     this.curPageNumber = this.currentpage;
     this.totalPageCount = this.totalpage;
