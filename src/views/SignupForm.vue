@@ -11,26 +11,56 @@
 
           <div class="modal-body">
             <form action="">
-              <p>
-                <label for="id-input">ID : </label>
-                <input id="id-input" type="text" value="" v-model="userId" />
-              </p>
-              <p>
-                <label for="name-input">Name : </label>
-                <input id="name-input" type="text" value="" v-model="userName" />
-              </p>
-              <p>
-                <label for="pw-input">Password : </label>
-                <input id="pw-input" type="password" value="" v-model="userPassword" />
-              </p>
-              <p>
-                <label for="email-input">E-mail : </label>
-                <input id="email-input" type="text" value="" v-model="userEmail" />
-              </p>
-              <p>
-                <label for="nickname-input">Nickname : </label>
-                <input id="nickname-input" type="text" value="" v-model="userNickname" />
-              </p>
+              <table class="signup-table">
+                <thead>
+                  <tr>
+                  <th></th>
+                  <th></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>
+                      <label for="id-input">ID </label>
+                    </td>
+                    <td>
+                      <input id="id-input" type="text" value="" v-model="userId" />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <label for="name-input">Name </label>
+                    </td>
+                    <td>
+                      <input id="name-input" type="text" value="" v-model="userName" />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <label for="pw-input">Password </label>
+                    </td>
+                    <td>
+                      <input id="pw-input" type="password" value="" v-model="userPassword" />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                        <label for="email-input">E-mail </label>
+                    </td>
+                    <td>
+                        <input id="email-input" type="text" value="" v-model="userEmail" />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                        <label for="nickname-input">Nickname </label>
+                    </td>
+                    <td>
+                        <input id="nickname-input" type="text" value="" v-model="userNickname" />
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             </form>
           </div>
 
@@ -185,6 +215,10 @@ export default {
 
 .user-alert {
   color: #ff0000;
+}
+
+.signup-table {
+  text-align: left;
 }
 
 </style>
