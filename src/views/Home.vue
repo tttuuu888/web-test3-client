@@ -14,8 +14,8 @@
     <div>
       <Post v-if="showPost" :key="showPost"
             :postid="postId" />
-     <PostsList v-else
-                :posts="posts" :key="showPostList"/>
+      <PostsList v-else
+                 :posts="posts" :key="showPostList"/>
     </div>
     <div>
       <Pagination/>
@@ -66,7 +66,7 @@ export default {
         /* console.log('route page :'+  this.$route.params.post) */
         this.showPost = false;
         this.showPostList = true;
-           this.getList();
+        this.getList();
       }
     }
   },
@@ -140,7 +140,7 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+  margin-top: 0;
 }
 .post-btn:hover {
   background-color:lightgray;
