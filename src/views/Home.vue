@@ -15,10 +15,10 @@
       <Post v-if="showPost" :key="showPost"
             :postid="postId" />
       <PostsList v-else
-                 :posts="posts" :key="showPostList"/>
-    </div>
-    <div>
-      <Pagination/>
+                 :posts="posts"
+                 :currentpage="currentPage"
+                 :totalpage="totalPage"
+                 :key="showPostList"/>
     </div>
   </div>
 </template>
@@ -29,7 +29,6 @@ import Post from '@/views/Post.vue'
 import PostsList from '@/views/PostsList.vue'
 import LoginForm from '@/views/LoginForm.vue'
 import UserMenu from '@/views/UserMenu.vue'
-import Pagination from '@/views/Pagination.vue'
 
 
 export default {
@@ -53,7 +52,6 @@ export default {
       if(to.name == 'post') {
         /* console.log("to:" +JSON.stringify(to)); */
         /* console.log('route page :'+  JSON.stringify(this.$route.params)) */
-        this.currentPage = -1;
         this.postId = Number(this.$route.params.postid);
         console.log("postid:" + this.postId);
         this.showPost = true;
@@ -86,7 +84,6 @@ export default {
     PostsList,
     LoginForm,
     UserMenu,
-    Pagination,
   },
   methods: {
     getList: function() {
@@ -141,8 +138,5 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin-top: 0;
-}
-.post-btn:hover {
-  background-color:lightgray;
 }
 </style>
