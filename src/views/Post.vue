@@ -12,7 +12,7 @@
         </td>
       </table>
     </div>
-    <pre>{{ this.content }}</pre>
+    <pre class="content">{{ this.content }}</pre>
     <PostOptions :isauthor="isPostAuthor" :postid="this.postid" />
   </div>
 </template>
@@ -65,5 +65,9 @@ export default {
 .title-table {
   text-align: center;
   margin: auto;
+}
+
+.content {
+  white-space: pre-wrap;
 }
 </style>
