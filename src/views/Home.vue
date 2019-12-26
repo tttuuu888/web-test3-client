@@ -13,6 +13,7 @@
     </div>
     <div>
       <Post v-if="showPost" :key="showPost"
+            :loginid="loginId"
             :postid="postId" />
       <PostsList v-else
                  :posts="posts"

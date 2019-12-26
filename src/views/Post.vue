@@ -13,16 +13,21 @@
       </table>
     </div>
     <pre>{{ this.content }}</pre>
+    <PostOptions :isauthor="isPostAuthor" :postid="this.postid" />
   </div>
 </template>
 
 <script>
+import PostOptions from '@/views/PostOptions.vue'
+
 export default {
   name: 'post',
   components: {
+    PostOptions,
   },
   props: {
     postid: Number,
+    loginid: String,
   },
   computed: {
   },
@@ -33,7 +38,9 @@ export default {
       msg: 'test',
       title: '',
       content: '',
+      authorId: '',
       authorNickname: '',
+      isPostAuthor: false,
     }
   },
   created () {
@@ -45,7 +52,9 @@ export default {
           let ret = result.data;
           this.title = ret.title
           this.content = ret.content;
+          this.authorId = ret.author;
           this.authorNickname = ret.nickname;
+          this.isPostAuthor = this.loginid == this.authorId;
     });
   },
 }

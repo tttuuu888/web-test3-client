@@ -1,5 +1,5 @@
 <template>
-  <div id="posts">
+  <div id="postlist">
     <table class="post-table" style="width:80%;">
       <colgroup>
         <col span="1" style="width: 10%;">
