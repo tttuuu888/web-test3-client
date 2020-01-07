@@ -1,5 +1,8 @@
 # web-test3-client
 
+## About
+A client of simple bulletin board test project.
+
 ## Project setup
 ```
 yarn install
@@ -19,6 +22,3 @@ yarn build
 ```
 yarn lint
 ```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
