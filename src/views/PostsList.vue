@@ -25,19 +25,13 @@
         </tr>
       </tbody>
     </table>
-    <div>
-      <Pagination :currentpage="curPageNumber" :totalpage="totalPageCount"/>
-    </div>
   </div>
 </template>
 
 <script>
-import Pagination from '@/views/Pagination.vue'
-
 export default {
   name: 'postlist',
   components: {
-    Pagination,
   },
   methods: {
   },
