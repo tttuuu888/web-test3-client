@@ -31,13 +31,13 @@ const routes = [
     component: Home
   },
   {
-    path: '/search/title/',
+    path: '/search/title/:page',
     name: 'searchtitle',
     props: true,
     component: Home
   },
   {
-    path: '/search/author/',
+    path: '/search/author/:page',
     name: 'searchauthor',
     props: true,
     component: Home

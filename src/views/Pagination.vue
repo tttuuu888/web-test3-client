@@ -1,6 +1,11 @@
 <template>
   <div>
-    {{ curPageNumber }} / {{ totalPageCount }}
+    <span v-if="showpage">
+      {{ curPageNumber }} / {{ totalPageCount }}
+    </span>
+    <span v-else>
+      {{ curPageNumber }}
+    </span>
     <button :disabled="!firstPageButtonEnable" @click="firstPageButtonClick">
       First page
     </button>
@@ -21,6 +26,9 @@ export default {
   props: {
     currentpage: Number,
     totalpage: Number,
+    showpage: Boolean,
+    searchtype: String,
+    searchkeywords: Array,
   },
   computed: {
   },
@@ -28,6 +36,9 @@ export default {
     setButtonsEnable: function() {
       this.curPageNumber = this.currentpage;
       this.totalPageCount = this.totalpage;
+      if (!this.showpage) {
+        this.totalPageCount = this.curPageNumber + 1;
+      }
       this.firstPageButtonEnable = this.curPageNumber != 1;
       this.previousButtonEnable  = this.curPageNumber != 1;
       this.nextButtonEnable  = this.curPageNumber != this.totalPageCount;
@@ -36,10 +47,20 @@ export default {
       this.$router.push({ name: 'list', params: { page: 1 }})
     },
     previousPageButtonClick: function() {
-      this.$router.push({ name: 'list', params: { page: (this.curPageNumber - 1) }})
+      if(this.searchkeywords == '')
+        this.$router.push({ name: 'list', params: { page: (this.curPageNumber - 1) }})
+      else
+        this.$router.push({ name: this.searchtype,
+                            params:{ keywords: this.searchkeywords,
+                                     page: (this.curPageNumber - 1)}})
     },
     nextPageButtonClick: function() {
-      this.$router.push({ name: 'list', params: { page: (this.curPageNumber + 1) }})
+      if(this.searchkeywords == '')
+        this.$router.push({ name: 'list', params: { page: (this.curPageNumber + 1) }})
+      else
+        this.$router.push({ name: this.searchtype,
+                            params:{ keywords: this.searchkeywords,
+                                     page: (this.curPageNumber + 1)}})
     },
   },
   watch: {
@@ -73,7 +94,6 @@ export default {
   mounted () {
     /* console.log(this.curPageNumber, this.totalPageCount) */
     this.setButtonsEnable();
-
   },
 }
 </script>

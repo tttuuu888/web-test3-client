@@ -22,7 +22,11 @@
                  :key="showPostList"/>
     </div>
     <SearchBar v-if="!showPost"/>
-    <Pagination :currentpage="currentPage" :totalpage="totalPage"/>
+    <Pagination :currentpage="currentPage"
+                :totalpage="totalPage"
+                :showpage="showPage"
+                :searchtype="pageType"
+                :searchkeywords="searchKeywords"/>
   </div>
 </template>
 
@@ -46,12 +50,14 @@ export default {
       loginNickname: '',
       totalPage: 1,
       currentPage: 1,
+      pageType: 'list',
       posts: [],
       postId: 0,
       showPost: false,
       showPostList: true,
+      showPage: true,
       searchType: '',
-      searchKeywords: '',
+      searchKeywords: [],
     }
   },
   watch: {
@@ -61,6 +67,7 @@ export default {
       console.log('route page :'+  JSON.stringify(this.$route.params))
       this.showPost = false;
       this.showPostList = true;
+      this.showPage=true
       switch (to.name) {
         case 'post':
           this.postId = Number(this.$route.params.postid);
@@ -68,10 +75,14 @@ export default {
           this.showPostList = false;
           break;
         case 'searchtitle':
-          this.getSearchResult('title', this.$route.params.keywords);
+          this.pageType='searchtitle'
+          this.showPage=false
+          this.getSearchResult('title', this.$route.params.keywords, this.$route.params.page);
           break;
         case 'searchauthor':
-          this.getSearchResult('author', this.$route.params.keywords);
+          this.pageType='searchauthor'
+          this.showPage=false
+          this.getSearchResult('author', this.$route.params.keywords, this.$route.params.page);
           break;
         default:
           this.getList(parseInt(this.$route.params.page));
@@ -110,25 +121,23 @@ export default {
             this.currentPage =  parseInt(result.data.currentPage);
           });
     },
-    getSearchResult: function(stype, skeywords) {
+    getSearchResult: function(stype, skeywords, spage) {
       let url = '/search/' + stype
       this.searchKeywords = this.$route.params.keywords;
-      console.log("tptp " + stype)
-      console.log("apap " + skeywords)
 
       let psFunc = function(params) {
         return qs.stringify(params, {arrayFormat: 'repeat'})
       }
 
       this.$http.get(url,
-                     { params: {keywords: skeywords,},
+                     { params: {keywords: skeywords, page: spage,},
                        paramsSerializer: psFunc})
-             .then( (result) => {
-               console.log("axios get list" + JSON.stringify(result.data))
-               this.posts = result.data.list
-               this.totalPage =  parseInt(result.data.totalPage);
-               this.currentPage =  parseInt(result.data.currentPage);
-             });
+          .then( (result) => {
+            console.log("axios get list" + JSON.stringify(result.data))
+            this.posts = result.data.list
+            this.totalPage =  parseInt(result.data.totalPage);
+            this.currentPage =  parseInt(result.data.currentPage);
+          });
     },
     userLogin: function(id, nickname) {
       let user = {'id': id, 'nickname': nickname};
