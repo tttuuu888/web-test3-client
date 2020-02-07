@@ -67,7 +67,8 @@ export default {
       console.log('route page :'+  JSON.stringify(this.$route.params))
       this.showPost = false;
       this.showPostList = true;
-      this.showPage=true
+      this.showPage=true;
+      this.searchKeywords  = [];
       switch (to.name) {
         case 'post':
           this.postId = Number(this.$route.params.postid);
