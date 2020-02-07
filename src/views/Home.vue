@@ -21,16 +21,19 @@
                  :totalpage="totalPage"
                  :key="showPostList"/>
     </div>
+    <SearchBar v-if="!showPost"/>
     <Pagination :currentpage="currentPage" :totalpage="totalPage"/>
   </div>
 </template>
 
 <script>
+import qs from 'qs';
 // @ is an alias to /src
 import Post from '@/views/Post.vue'
 import PostsList from '@/views/PostsList.vue'
 import LoginForm from '@/views/LoginForm.vue'
 import UserMenu from '@/views/UserMenu.vue'
+import SearchBar from '@/views/SearchBar.vue'
 import Pagination from '@/views/Pagination.vue'
 
 
@@ -47,27 +50,32 @@ export default {
       postId: 0,
       showPost: false,
       showPostList: true,
+      searchType: '',
+      searchKeywords: '',
     }
   },
   watch: {
     /* '$route' (to, from) { */
     '$route' (to) {
-      if(to.name == 'post') {
-        /* console.log("to:" +JSON.stringify(to)); */
-        /* console.log('route page :'+  JSON.stringify(this.$route.params)) */
-        this.postId = Number(this.$route.params.postid);
-        console.log("postid:" + this.postId);
-        this.showPost = true;
-        this.showPostList = false;
-
-      } else {
-        /* console.log("to:" +JSON.stringify(to)); */
-        /* console.log("to:" +JSON.stringify(to) + "from :" + JSON.stringify(from)) */
-        /* console.log(" param : " + JSON.stringify(this.$route.params)) */
-        /* console.log('route page :'+  this.$route.params.post) */
-        this.showPost = false;
-        this.showPostList = true;
-        this.getList();
+      /* console.log("to:" +JSON.stringify(to)); */
+      console.log('route page :'+  JSON.stringify(this.$route.params))
+      this.showPost = false;
+      this.showPostList = true;
+      switch (to.name) {
+        case 'post':
+          this.postId = Number(this.$route.params.postid);
+          this.showPost = true;
+          this.showPostList = false;
+          break;
+        case 'searchtitle':
+          this.getSearchResult('title', this.$route.params.keywords);
+          break;
+        case 'searchauthor':
+          this.getSearchResult('author', this.$route.params.keywords);
+          break;
+        default:
+          this.getList(parseInt(this.$route.params.page));
+          break;
       }
     }
   },
@@ -80,20 +88,19 @@ export default {
       this.loginNickname = user.nickname;
       this.loggedIn = true;
     }
-    this.getList();
+    this.getList(1);
   },
   components: {
     Post,
     PostsList,
     LoginForm,
     UserMenu,
+    SearchBar,
     Pagination,
   },
   methods: {
-    getList: function() {
-      if(this.$route.params.page) {
-        this.currentPage = parseInt(this.$route.params.page);
-      }
+    getList: function(page) {
+      this.currentPage = page;
 
       this.$http.get('/list', { params: {page: this.currentPage,}})
           .then( (result) => {
@@ -102,6 +109,26 @@ export default {
             this.totalPage =  parseInt(result.data.totalPage);
             this.currentPage =  parseInt(result.data.currentPage);
           });
+    },
+    getSearchResult: function(stype, skeywords) {
+      let url = '/search/' + stype
+      this.searchKeywords = this.$route.params.keywords;
+      console.log("tptp " + stype)
+      console.log("apap " + skeywords)
+
+      let psFunc = function(params) {
+        return qs.stringify(params, {arrayFormat: 'repeat'})
+      }
+
+      this.$http.get(url,
+                     { params: {keywords: skeywords,},
+                       paramsSerializer: psFunc})
+             .then( (result) => {
+               console.log("axios get list" + JSON.stringify(result.data))
+               this.posts = result.data.list
+               this.totalPage =  parseInt(result.data.totalPage);
+               this.currentPage =  parseInt(result.data.currentPage);
+             });
     },
     userLogin: function(id, nickname) {
       let user = {'id': id, 'nickname': nickname};

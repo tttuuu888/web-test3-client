@@ -29,7 +29,19 @@ const routes = [
     name: 'post',
     props: true,
     component: Home
-  }
+  },
+  {
+    path: '/search/title/',
+    name: 'searchtitle',
+    props: true,
+    component: Home
+  },
+  {
+    path: '/search/author/',
+    name: 'searchauthor',
+    props: true,
+    component: Home
+  },
 ]
 
 const router = new VueRouter({
