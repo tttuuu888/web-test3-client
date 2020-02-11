@@ -1,7 +1,9 @@
 # web-test3-client
 
 ## About
-A client of simple bulletin board test project.
+A client of simple bulletin board test project.  
+No design. Functionality is the only interest here.  
+(Server : https://github.com/tttuuu888/web-test3-server)
 
 ## Project setup
 ```
